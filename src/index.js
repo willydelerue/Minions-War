@@ -9,7 +9,7 @@ import App from './App';
 // Redux
 
 import { Provider } from 'react-redux';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, MiddlewareArray, compose } from '@reduxjs/toolkit';
 import minionsReducer from './store/reducers/minions';
 import saveReducer from './store/reducers/save';
 
@@ -21,7 +21,26 @@ const reducer = combineReducers({
 
 });
 
-const store = configureStore({reducer:reducer});
+// Création du Middleware
+
+const middleWare = store => {
+  return next => {
+    return action => {
+      console.log(store.getState().minion.minions);
+      console.log(action.type);
+
+      return next(action);
+    };
+  };
+};
+
+// Action > Middleware > Reducer
+
+const store = configureStore({
+  reducer, 
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleWare),
+  devTools: process.env.NODE_ENV !== 'production'
+});
 
 ReactDOM.render(
   <React.StrictMode>

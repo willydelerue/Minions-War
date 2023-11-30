@@ -3,7 +3,9 @@
 import React from 'react';
 import classes from './Commander.module.css';
 
-import actionTypes from '../../store/action';
+import actionTypes from '../../store/actions/actionTypes';
+
+import * as actionCreators from '../../store/actions/index';
 
 //Redux
 import { connect } from 'react-redux';
@@ -32,11 +34,11 @@ const mapStateToProps = state => {
 //Récupération des actions
 const mapDispatchToProps = dispatch => {
     return {
-        createMinion: () => dispatch({type: actionTypes.CREATE_MINION}),
-        destroyMinion: () => dispatch({type: actionTypes.DESTROY_MINION}),
-        createTeam: (value) => dispatch({type: actionTypes.CREATE_TEAM, value: value}),
-        destroyTeam: (value) => dispatch({type: actionTypes.DESTROY_TEAM, value: value}),
-        save: (value) => dispatch({type: actionTypes.SAVE, value: value})
+        createMinion: () => dispatch(actionCreators.createMinion()),
+        destroyMinion: () => dispatch(actionCreators.destroyMinion()),
+        createTeam: (value) => dispatch(actionCreators.createTeam(value)),
+        destroyTeam: (value) => dispatch(actionCreators.destroyTeam(value)),
+        save: (value) => dispatch(actionCreators.save(value))
     };
 };
 
